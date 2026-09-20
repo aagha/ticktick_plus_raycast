@@ -32,6 +32,18 @@ view command shows them as toasts when you next open one.
 Keyboard shortcuts follow each platform: where this README writes ⌘, use `Ctrl` on
 Windows.
 
+### A note on the `postinstall` script
+
+`@raycast/api` 2.x fails to build any extension whose AI tools take an array-typed
+input, with `Cannot read properties of undefined (reading 'flags')`. The CLI bundles
+the TypeScript compiler into its own command bundles, and TypeScript looks for
+`lib.*.d.ts` next to the executing file — none ship there, so the schema extractor
+runs without a standard library, cannot resolve the global `Array` type, and throws.
+
+`scripts/patch-raycast-cli-libs.js` runs on `npm install` and copies this project's
+TypeScript lib files next to each CLI bundle that embeds the extractor. Delete the
+script and its `postinstall` hook once upstream fixes this.
+
 ## Setup
 
 1. Run any TickTick command.
