@@ -2,6 +2,7 @@
 
 ## [Windows Support] - 2026-09-20
 
+- Upgraded to `@raycast/api` 2.x, which is the version that supports the Raycast desktop app on Windows (the CLI now needs Node.js 22.22.2+)
 - Added Windows to the extension's supported platforms
 - Every keyboard shortcut is now declared per platform, so ⌘ bindings map to `Ctrl` on Windows
 - The Menu Bar command stays macOS only — Raycast has no menu bar commands on Windows. Overdue and urgent alerts still reach Windows users as toasts when a view command opens

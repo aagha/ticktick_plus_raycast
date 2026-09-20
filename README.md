@@ -18,7 +18,8 @@ Unofficial community [Raycast](https://raycast.com) extension for [TickTick](htt
 ## Requirements
 
 - macOS or Windows
-- [Raycast](https://raycast.com) installed
+- [Raycast](https://raycast.com) 2.0 or later — Windows is only supported by the Raycast 2.0 desktop app
+- Node.js 22.22.2 or later (required by the Raycast CLI from `@raycast/api` 2.0)
 - TickTick account
 
 ### Platform support
