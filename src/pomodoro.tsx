@@ -3,6 +3,7 @@ import { usePomodoro } from "./hooks/usePomodoro";
 import { useSync } from "./hooks/useSync";
 import { useAlerts } from "./hooks/useAlerts";
 import { PomodoroPhase } from "./lib/pomodoro-state";
+import { hotkey } from "./lib/shortcuts";
 
 function formatDuration(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -58,28 +59,18 @@ export default function Pomodoro() {
                   <Action
                     title={state.phase === "idle" ? "Start Focus Session" : "Resume"}
                     icon={Icon.Play}
-                    shortcut={{ modifiers: ["cmd"], key: "return" }}
+                    shortcut={hotkey(["cmd"], "return")}
                     onAction={() => (state.phase === "idle" ? start() : resume())}
                   />
                 ) : (
-                  <Action
-                    title="Pause"
-                    icon={Icon.Pause}
-                    shortcut={{ modifiers: ["cmd"], key: "return" }}
-                    onAction={pause}
-                  />
+                  <Action title="Pause" icon={Icon.Pause} shortcut={hotkey(["cmd"], "return")} onAction={pause} />
                 )}
-                <Action
-                  title="Skip Phase"
-                  icon={Icon.Forward}
-                  shortcut={{ modifiers: ["cmd"], key: "." }}
-                  onAction={skip}
-                />
+                <Action title="Skip Phase" icon={Icon.Forward} shortcut={hotkey(["cmd"], ".")} onAction={skip} />
                 <Action
                   title="Reset Timer"
                   icon={Icon.ArrowCounterClockwise}
                   style={Action.Style.Destructive}
-                  shortcut={{ modifiers: ["cmd", "shift"], key: "r" }}
+                  shortcut={hotkey(["cmd", "shift"], "r")}
                   onAction={reset}
                 />
               </ActionPanel.Section>

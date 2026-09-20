@@ -1,5 +1,11 @@
 # TickTick Changelog
 
+## [Windows Support] - 2026-09-20
+
+- Added Windows to the extension's supported platforms
+- Every keyboard shortcut is now declared per platform, so ⌘ bindings map to `Ctrl` on Windows
+- The Menu Bar command stays macOS only — Raycast has no menu bar commands on Windows. Overdue and urgent alerts still reach Windows users as toasts when a view command opens
+
 ## [AI Tools] - 2026-08-07
 
 - Manage TickTick from Raycast AI with tools for tasks, projects, habits, Pomodoro, smart lists, comments, and profile

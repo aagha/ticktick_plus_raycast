@@ -6,6 +6,7 @@ import { getComments, addComment, deleteComment } from "../api/ticktick";
 import { EditTaskForm } from "./EditTaskForm";
 import { format, parseISO } from "date-fns";
 import { Clipboard } from "@raycast/api";
+import { hotkey } from "../lib/shortcuts";
 
 interface Props {
   task: Task;
@@ -63,7 +64,7 @@ export function TaskDetail({ task, projects, projectName, onMutate }: Props) {
               <Action.Push
                 title="Edit Task"
                 icon={Icon.Pencil}
-                shortcut={{ modifiers: ["cmd"], key: "e" }}
+                shortcut={hotkey(["cmd"], "e")}
                 target={<EditTaskForm task={task} onSave={onMutate} />}
               />
               <Action title="Complete" icon={Icon.Checkmark} onAction={handleComplete} />

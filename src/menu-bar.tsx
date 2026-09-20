@@ -4,8 +4,13 @@ import { loadPomodoroState, formatTimer, getRemainingSeconds } from "./lib/pomod
 import { tickPomodoro } from "./lib/pomodoro-engine";
 import { getPendingAlerts } from "./lib/alerts";
 import { getCachedTaskCounts } from "./lib/menu-bar-cache";
+import { hotkey } from "./lib/shortcuts";
 
 /**
+ * macOS only — Raycast does not have menu bar commands on Windows, so this command is
+ * never registered there. Windows users get the same alerts through toasts, which every
+ * view command drains via useAlerts().
+ *
  * Menu bar must finish in <9s. No network/API calls here — only LocalStorage reads.
  * Task counts are cached by the background-check command (every 5 min).
  * Timer display is computed from endsAt, refreshed every 1m (Raycast platform minimum).
@@ -104,25 +109,25 @@ export default function MenuBar() {
       <MenuBarExtra.Item
         title="Today"
         icon={Icon.Calendar}
-        shortcut={{ modifiers: ["cmd"], key: "t" }}
+        shortcut={hotkey(["cmd"], "t")}
         onAction={() => launchCommand({ name: "today", type: LaunchType.UserInitiated })}
       />
       <MenuBarExtra.Item
         title="Inbox"
         icon={Icon.Tray}
-        shortcut={{ modifiers: ["cmd"], key: "i" }}
+        shortcut={hotkey(["cmd"], "i")}
         onAction={() => launchCommand({ name: "inbox", type: LaunchType.UserInitiated })}
       />
       <MenuBarExtra.Item
         title="Quick Add"
         icon={Icon.Plus}
-        shortcut={{ modifiers: ["cmd"], key: "n" }}
+        shortcut={hotkey(["cmd"], "n")}
         onAction={() => launchCommand({ name: "quick-add", type: LaunchType.UserInitiated })}
       />
       <MenuBarExtra.Item
         title="Pomodoro"
         icon={Icon.Clock}
-        shortcut={{ modifiers: ["cmd"], key: "p" }}
+        shortcut={hotkey(["cmd"], "p")}
         onAction={() => launchCommand({ name: "pomodoro", type: LaunchType.UserInitiated })}
       />
 

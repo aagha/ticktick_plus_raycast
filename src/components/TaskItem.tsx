@@ -4,6 +4,7 @@ import { completeTask, uncompleteTask, deleteTask } from "../api/tasks";
 import { TaskDetail } from "./TaskDetail";
 import { EditTaskForm } from "./EditTaskForm";
 import { format, isBefore, parseISO, startOfDay } from "date-fns";
+import { hotkey } from "../lib/shortcuts";
 
 interface Props {
   task: Task;
@@ -54,7 +55,7 @@ async function handleCompleteWithUndo(task: Task, onComplete: () => void, onReva
     message: task.title.length > 40 ? task.title.slice(0, 40) + "…" : task.title,
     primaryAction: {
       title: "Undo",
-      shortcut: { modifiers: ["cmd"], key: "z" },
+      shortcut: hotkey(["cmd"], "z"),
       onAction: async (t) => {
         undone = true;
         t.style = Toast.Style.Animated;
@@ -120,39 +121,35 @@ export function TaskItem({ task, projectName, projects = [], onComplete, onDelet
             <Action.Push
               title="View Task Details"
               icon={Icon.Eye}
-              shortcut={{ modifiers: ["cmd"], key: "return" }}
+              shortcut={hotkey(["cmd"], "return")}
               target={<TaskDetail task={task} projects={projects} projectName={projectName} onMutate={onRevalidate} />}
             />
             <Action.Push
               title="Edit Task"
               icon={Icon.Pencil}
-              shortcut={{ modifiers: ["cmd"], key: "e" }}
+              shortcut={hotkey(["cmd"], "e")}
               target={<EditTaskForm task={task} onSave={onRevalidate} />}
             />
             <Action
               title="Complete Task"
               icon={Icon.Checkmark}
-              shortcut={{ modifiers: ["cmd", "shift"], key: "return" }}
+              shortcut={hotkey(["cmd", "shift"], "return")}
               onAction={() => handleCompleteWithUndo(task, onComplete, onRevalidate)}
             />
             <Action.OpenInBrowser
               title="Open in TickTick"
               url={`https://ticktick.com/webapp/#p/${task.projectId}/tasks/${task.id}`}
-              shortcut={{ modifiers: ["cmd"], key: "o" }}
+              shortcut={hotkey(["cmd"], "o")}
             />
           </ActionPanel.Section>
 
           <ActionPanel.Section title="Copy">
-            <Action.CopyToClipboard
-              title="Copy Title"
-              content={task.title}
-              shortcut={{ modifiers: ["cmd"], key: "c" }}
-            />
+            <Action.CopyToClipboard title="Copy Title" content={task.title} shortcut={hotkey(["cmd"], "c")} />
             {task.content && (
               <Action.CopyToClipboard
                 title="Copy Notes"
                 content={task.content}
-                shortcut={{ modifiers: ["cmd", "shift"], key: "c" }}
+                shortcut={hotkey(["cmd", "shift"], "c")}
               />
             )}
           </ActionPanel.Section>
@@ -162,7 +159,7 @@ export function TaskItem({ task, projectName, projects = [], onComplete, onDelet
               title="Delete Task"
               icon={Icon.Trash}
               style={Action.Style.Destructive}
-              shortcut={{ modifiers: ["cmd"], key: "backspace" }}
+              shortcut={hotkey(["cmd"], "backspace")}
               onAction={async () => {
                 const toast = await showToast({ style: Toast.Style.Animated, title: "Deleting task…" });
                 try {

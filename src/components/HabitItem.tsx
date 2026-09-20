@@ -2,6 +2,7 @@ import { Action, ActionPanel, Color, Icon, List, showToast, Toast } from "@rayca
 import { Habit, HabitCheckin } from "../types/ticktick";
 import { checkinHabit, uncheckinHabit } from "../api/habits";
 import { format, subDays } from "date-fns";
+import { hotkey } from "../lib/shortcuts";
 
 interface Props {
   habit: Habit;
@@ -81,7 +82,7 @@ export function HabitItem({ habit, checkins, onCheckin }: Props) {
               <Action
                 title="Check in Today"
                 icon={Icon.Checkmark}
-                shortcut={{ modifiers: ["cmd"], key: "return" }}
+                shortcut={hotkey(["cmd"], "return")}
                 onAction={async () => {
                   try {
                     await checkinHabit(habit.id);

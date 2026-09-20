@@ -4,6 +4,7 @@ import { useSync } from "./hooks/useSync";
 import { useAlerts } from "./hooks/useAlerts";
 import { completeTask, deleteTask, uncompleteTask } from "./api/tasks";
 import { Task } from "./types/ticktick";
+import { hotkey } from "./lib/shortcuts";
 
 type Quadrant = "ui" | "uni" | "nui" | "nuni";
 
@@ -66,7 +67,7 @@ export default function EisenhowerMatrix() {
                       <Action
                         title="Complete Task"
                         icon={Icon.Checkmark}
-                        shortcut={{ modifiers: ["cmd"], key: "return" }}
+                        shortcut={hotkey(["cmd"], "return")}
                         onAction={async () => {
                           let undone = false;
                           try {
@@ -82,7 +83,7 @@ export default function EisenhowerMatrix() {
                             message: task.title.slice(0, 40),
                             primaryAction: {
                               title: "Undo",
-                              shortcut: { modifiers: ["cmd"], key: "z" },
+                              shortcut: hotkey(["cmd"], "z"),
                               onAction: async (t) => {
                                 undone = true;
                                 t.style = Toast.Style.Animated;
@@ -112,7 +113,7 @@ export default function EisenhowerMatrix() {
                         title="Delete Task"
                         icon={Icon.Trash}
                         style={Action.Style.Destructive}
-                        shortcut={{ modifiers: ["cmd"], key: "backspace" }}
+                        shortcut={hotkey(["cmd"], "backspace")}
                         onAction={async () => {
                           try {
                             await deleteTask(task.projectId, task.id);

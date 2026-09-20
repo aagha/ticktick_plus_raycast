@@ -1,6 +1,6 @@
 # TickTick+ for Raycast
 
-Unofficial community [Raycast](https://raycast.com) extension for [TickTick](https://ticktick.com) on **macOS**. Manage tasks, projects, tags, habits, pomodoro, smart lists, and more — from Raycast.
+Unofficial community [Raycast](https://raycast.com) extension for [TickTick](https://ticktick.com) on **macOS and Windows**. Manage tasks, projects, tags, habits, pomodoro, smart lists, and more — from Raycast.
 
 > **Disclaimer:** This extension is not affiliated with or endorsed by TickTick or Appest. Sign-in uses TickTick OAuth through Raycast—just select **Sign in with TickTick** the first time you run a command. No API credentials are required.
 
@@ -12,14 +12,24 @@ Unofficial community [Raycast](https://raycast.com) extension for [TickTick](htt
 - **Projects & tags** — manage projects; browse tasks by tag
 - **Habits** — view and check in
 - **Pomodoro** — start/pause/finish synced with TickTick
-- **Menu bar** — pomodoro timer and overdue/urgent counts
+- **Menu bar** — pomodoro timer and overdue/urgent counts (macOS only)
 - **Background alerts** — notifications for overdue and urgent tasks
 
 ## Requirements
 
-- macOS
+- macOS or Windows
 - [Raycast](https://raycast.com) installed
 - TickTick account
+
+### Platform support
+
+Everything works the same on both platforms, with one exception: Raycast has no menu
+bar commands on Windows, so the **Menu Bar** command is not registered there. Overdue
+and urgent alerts still reach Windows users — **Background Alerts** queues them and any
+view command shows them as toasts when you next open one.
+
+Keyboard shortcuts follow each platform: where this README writes ⌘, use `Ctrl` on
+Windows.
 
 ## Setup
 
@@ -57,11 +67,11 @@ Raycast will load the extension in development mode. Run a command and sign in w
 | Pomodoro                    | Focus timer                                           |
 | Manage Projects             | Create/edit projects                                  |
 | Profile                     | Account info                                          |
-| Menu Bar                    | Timer & counts in menu bar                            |
+| Menu Bar                    | Timer & counts in menu bar (macOS only)               |
 | Background Alerts           | Overdue and high-priority alerts (runs in background) |
 | Disconnect TickTick Account | Clear the OAuth session                               |
 
-**Tip:** Complete a task with **⌘⇧↩** from any task list.
+**Tip:** Complete a task with **⌘⇧↩** (**Ctrl+Shift+Enter** on Windows) from any task list.
 
 ## Development
 

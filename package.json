@@ -9,7 +9,8 @@
     "0xdhrv"
   ],
   "platforms": [
-    "macOS"
+    "macOS",
+    "Windows"
   ],
   "categories": [
     "Productivity"
@@ -177,7 +178,7 @@
       "name": "menu-bar",
       "title": "Menu Bar",
       "subtitle": "TickTick",
-      "description": "TickTick status in your menu bar — timer, overdue count, quick actions",
+      "description": "TickTick status in your menu bar — timer, overdue count, quick actions (macOS only)",
       "mode": "menu-bar",
       "interval": "1m",
       "icon": "extension-icon.png"
