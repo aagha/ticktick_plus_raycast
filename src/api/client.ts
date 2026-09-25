@@ -1,4 +1,3 @@
-import { environment, LaunchType } from "@raycast/api";
 import { authorize, provider } from "./oauth";
 import { TickTickApiError } from "./errors";
 
@@ -15,16 +14,6 @@ export interface RequestOptions {
 }
 
 async function request<T>(method: string, path: string, body?: unknown, options?: RequestOptions): Promise<T> {
-  // Raycast cannot create an OAuth request from a background command: the attempt fails and
-  // corrupts a pending interactive sign-in, which leaves the user unable to connect at all.
-  // Every background caller routes through here, so refuse before starting a login.
-  if (environment.launchType === LaunchType.Background) {
-    const tokens = await provider.client.getTokens();
-    if (!tokens?.accessToken) {
-      throw new TickTickApiError(401, "TickTick is not connected. Sign in from a command window.");
-    }
-  }
-
   let token = await authorize();
 
   const doFetch = (t: string) =>

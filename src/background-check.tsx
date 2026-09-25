@@ -1,4 +1,5 @@
-import { getPreferenceValues, LocalStorage } from "@raycast/api";
+import { environment, getPreferenceValues, LocalStorage } from "@raycast/api";
+import { provider } from "./api/oauth";
 import { batchSync } from "./api/sync";
 import { pushAlert, getPendingAlerts } from "./lib/alerts";
 import { setCachedTaskCounts } from "./lib/menu-bar-cache";
@@ -30,6 +31,15 @@ function isOverdue(task: Task): boolean {
 export default async function BackgroundCheck() {
   const prefs = getPreferenceValues<Preferences>();
   if (prefs.enableAlerts === false) return;
+
+  // TEMP diagnostic - remove once the interval launch type is confirmed on Windows.
+  console.log(`ticktick background-check: launch=${environment.launchType} mode=${environment.commandMode}`);
+
+  // Raycast cannot create an OAuth request from a background command: the attempt fails and
+  // corrupts a pending interactive sign-in, leaving the user unable to connect at all. This
+  // command is the only API caller that can run without the user, so skip it while disconnected.
+  const tokens = await provider.client.getTokens();
+  if (!tokens?.accessToken) return;
 
   // Always tick pomodoro (may complete and queue alert)
   await tickPomodoro();
