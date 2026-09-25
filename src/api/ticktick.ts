@@ -42,15 +42,15 @@ export async function moveTask(fromProjectId: string, toProjectId: string, taskI
 
 export async function getCompletedTasks(from: Date, to: Date): Promise<Task[]> {
   try {
-    const result = await apiPost<{ tasks?: Task[] }>(
+    const result = await apiPost<Task[]>(
       "/open/v1/task/completed",
       {
-        from: formatTickTickTime(from),
-        to: formatTickTickTime(to),
+        startDate: formatTickTickTime(from),
+        endDate: formatTickTickTime(to),
       },
       { wipeTokenOn401: false },
     );
-    return result?.tasks ?? [];
+    return result ?? [];
   } catch {
     // V2 fallback
     const fromMs = from.getTime();
