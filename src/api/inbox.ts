@@ -79,6 +79,11 @@ export async function fetchInboxTasks(inboxId: string): Promise<{ project: Proje
   // Prefer the documented shortcut — works even when inbox isn't in the project list
   try {
     const inboxData = await apiGet<V1ProjectData>("/open/v1/project/inbox/data");
+    // TEMP diagnostic - remove once the inbox response shape is confirmed.
+    const raw = inboxData as unknown as { project?: { id?: string }; tasks?: unknown[] };
+    console.log(
+      `ticktick: inbox raw -> projectId=${raw?.project?.id ?? "none"} tasks=${raw?.tasks?.length ?? "none"} head=${JSON.stringify(inboxData).slice(0, 200)}`,
+    );
     return { project: inboxData.project ?? null, tasks: inboxData.tasks ?? [] };
   } catch {
     // Fall back to ID-based fetch
