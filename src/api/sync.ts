@@ -58,10 +58,6 @@ async function v1Sync(): Promise<BatchSyncResponse> {
   if (inboxId) await setStoredInboxId(inboxId);
 
   const finalTasks = mergeTasks(allTasks, inboxTasks);
-  // TEMP diagnostic - remove once the inbox shape is confirmed.
-  console.log(
-    `ticktick: sync -> inboxId=${inboxId || "(none)"} projectTasks=${allTasks.length} inboxTasks=${inboxTasks.length} matches=${finalTasks.filter((t) => t.projectId === inboxId).length}`,
-  );
   const projectProfiles =
     inboxId && !projects.some((p) => p.id === inboxId)
       ? [inboxProject ?? { id: inboxId, name: "Inbox", kind: "INBOX" }, ...projects]

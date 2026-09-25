@@ -1,4 +1,3 @@
-import { environment } from "@raycast/api";
 import { authorize, provider } from "./oauth";
 import { TickTickApiError } from "./errors";
 
@@ -15,14 +14,6 @@ export interface RequestOptions {
 }
 
 async function request<T>(method: string, path: string, body?: unknown, options?: RequestOptions): Promise<T> {
-  // TEMP diagnostic - remove once the Windows login + empty-sync faults are understood.
-  const stored = await provider.client.getTokens();
-  if (!stored?.accessToken) {
-    console.log(
-      `ticktick: login needed | cmd=${environment.commandName} mode=${environment.commandMode} launch=${environment.launchType}`,
-    );
-  }
-
   let token = await authorize();
 
   const doFetch = (t: string) =>
@@ -36,7 +27,6 @@ async function request<T>(method: string, path: string, body?: unknown, options?
     });
 
   let response = await doFetch(token);
-  console.log(`ticktick: ${method} ${path} -> ${response.status}`);
 
   if (response.status === 401) {
     // A 401 means different things depending on the endpoint:
