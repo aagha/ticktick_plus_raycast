@@ -29,6 +29,14 @@ export const provider = new OAuthService({
   },
 });
 
+/** Shared in-flight authorization. A command that fires several requests at once must not
+ * start several competing PKCE flows: only one can win the code exchange, and the losers
+ * fail with `invalid_grant` and leave no token stored. */
+let pendingAuthorization: Promise<string> | undefined;
+
 export async function authorize(): Promise<string> {
-  return provider.authorize();
+  pendingAuthorization ??= provider.authorize().finally(() => {
+    pendingAuthorization = undefined;
+  });
+  return pendingAuthorization;
 }
