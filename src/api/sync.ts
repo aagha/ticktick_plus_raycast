@@ -51,8 +51,10 @@ async function v1Sync(): Promise<BatchSyncResponse> {
   const { project: inboxProject, tasks: inboxTasks } = await fetchInboxTasks("");
 
   let inboxId = inboxProject?.id ?? "";
+  // The inbox endpoint returns its tasks but no project object, so the id those tasks carry is
+  // the only reliable source. The pattern guesses below pick a real project when asked first.
+  if (!inboxId) inboxId = inboxTasks[0]?.projectId ?? "";
   if (!inboxId) inboxId = await resolveInboxId(projects, allTasks);
-  if (!inboxId && inboxTasks[0]?.projectId) inboxId = inboxTasks[0].projectId;
   if (inboxId) await setStoredInboxId(inboxId);
 
   const finalTasks = mergeTasks(allTasks, inboxTasks);
