@@ -1,5 +1,4 @@
 import { getPreferenceValues, LocalStorage } from "@raycast/api";
-import { provider } from "./api/oauth";
 import { batchSync } from "./api/sync";
 import { pushAlert, getPendingAlerts } from "./lib/alerts";
 import { setCachedTaskCounts } from "./lib/menu-bar-cache";
@@ -31,11 +30,6 @@ function isOverdue(task: Task): boolean {
 export default async function BackgroundCheck() {
   const prefs = getPreferenceValues<Preferences>();
   if (prefs.enableAlerts === false) return;
-
-  // A background command must never start an OAuth flow: Raycast rejects it, and it
-  // corrupts a pending interactive sign-in. Only run once the user is connected.
-  const tokens = await provider.client.getTokens();
-  if (!tokens?.accessToken) return;
 
   // Always tick pomodoro (may complete and queue alert)
   await tickPomodoro();
