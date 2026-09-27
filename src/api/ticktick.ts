@@ -29,15 +29,10 @@ export async function deleteTask(projectId: string, taskId: string): Promise<voi
 }
 
 export async function moveTask(fromProjectId: string, toProjectId: string, taskId: string): Promise<void> {
-  try {
-    await apiPost("/open/v1/task/move", { fromProjectId, toProjectId, taskId }, { wipeTokenOn401: false });
-    return;
-  } catch {
-    // V2 fallback
-  }
-  await apiPost("/api/v2/batch/taskProject", {
-    move: [{ taskId, fromProjectId, toProjectId }],
-  });
+  // The endpoint takes an ARRAY of move operations and answers with an array of {id, etag}.
+  // A single object is rejected, and the old code then fell through to
+  // /api/v2/batch/taskProject, the browser API, which rejects OAuth with 401.
+  await apiPost("/open/v1/task/move", [{ fromProjectId, toProjectId, taskId }], { wipeTokenOn401: false });
 }
 
 export async function getCompletedTasks(from: Date, to: Date): Promise<Task[]> {
