@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Color, Icon, List, showToast, Toast } from "@raycast/api";
+import { Action, ActionPanel, Color, Icon, List, open, showToast, Toast } from "@raycast/api";
 import { Task, PRIORITY_LABELS, PRIORITY_COLORS, Project } from "../types/ticktick";
 import { completeTask, uncompleteTask, deleteTask } from "../api/tasks";
 import { TaskDetail } from "./TaskDetail";
@@ -137,9 +137,15 @@ export function TaskItem({ task, projectName, projects = [], onComplete, onDelet
               onAction={() => handleCompleteWithUndo(task, onComplete, onRevalidate)}
             />
             <Action.OpenInBrowser
-              title="Open in TickTick"
+              title="Open in TickTick (Web)"
               url={`https://ticktick.com/webapp/#p/${task.projectId}/tasks/${task.id}`}
               shortcut={hotkey(["cmd"], "o")}
+            />
+            <Action
+              title="Open in TickTick (App)"
+              icon={Icon.AppWindow}
+              shortcut={hotkey(["cmd", "shift"], "o")}
+              onAction={() => open(`ticktick:///webapp/#p/${task.projectId}/tasks/${task.id}`)}
             />
           </ActionPanel.Section>
 

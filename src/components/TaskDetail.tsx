@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Color, Icon, List, showToast, Toast } from "@raycast/api";
+import { Action, ActionPanel, Color, Icon, List, open, showToast, Toast } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { Task, Project, PRIORITY_LABELS, PRIORITY_COLORS } from "../types/ticktick";
 import { completeTask, toggleSubtask, moveTask } from "../api/tasks";
@@ -69,8 +69,13 @@ export function TaskDetail({ task, projects, projectName, onMutate }: Props) {
               />
               <Action title="Complete" icon={Icon.Checkmark} onAction={handleComplete} />
               <Action.OpenInBrowser
-                title="Open in TickTick"
+                title="Open in TickTick (Web)"
                 url={`https://ticktick.com/webapp/#p/${task.projectId}/tasks/${task.id}`}
+              />
+              <Action
+                title="Open in TickTick (App)"
+                icon={Icon.AppWindow}
+                onAction={() => open(`ticktick:///webapp/#p/${task.projectId}/tasks/${task.id}`)}
               />
             </ActionPanel>
           }

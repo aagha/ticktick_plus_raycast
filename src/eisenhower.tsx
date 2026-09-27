@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Color, Icon, List, showToast, Toast } from "@raycast/api";
+import { Action, ActionPanel, Color, Icon, List, open, showToast, Toast } from "@raycast/api";
 import { isToday, isTomorrow, parseISO } from "date-fns";
 import { useSync } from "./hooks/useSync";
 import { useAlerts } from "./hooks/useAlerts";
@@ -106,8 +106,13 @@ export default function EisenhowerMatrix() {
                         }}
                       />
                       <Action.OpenInBrowser
-                        title="Open in TickTick"
+                        title="Open in TickTick (Web)"
                         url={`https://ticktick.com/webapp/#p/${task.projectId}/tasks/${task.id}`}
+                      />
+                      <Action
+                        title="Open in TickTick (App)"
+                        icon={Icon.AppWindow}
+                        onAction={() => open(`ticktick:///webapp/#p/${task.projectId}/tasks/${task.id}`)}
                       />
                       <Action
                         title="Delete Task"
