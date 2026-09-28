@@ -1,0 +1,4 @@
+# Text files are LF in the repo and in the worktree. Without this, a checkout that has the
+# Windows default `core.autocrlf=true` writes CRLF, and `ray lint` then fails on every file
+# because Prettier wants LF. `text=auto` leaves binary assets (icons) untouched.
+* text=auto eol=lf
